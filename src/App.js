@@ -1,80 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { ADD_RESULTS } from './slice/restaurantSlice'
+import { ADD_RESULTS, selectRestaurant } from './slice/restaurantSlice'
 import SearchByCity from './Components/SearchByCity'
+import RestaurantItem from './Components/RestaurantItem'
 
 function App() {
   const dispatch = useDispatch()
+  const restaurants = useSelector(selectRestaurant)
+  const [ city, setCity ] = useState('')
+  // const [ isSearching, setIsSearching ] = useState(false)
+  // const [ hasResults, setHasResults ] = useState(false)
 
   const fetchRestaurants = (city) => {
+    if (!city){
+      return null
+    }
+    
+    // setIsSearching(true)
     fetch(`https://opentable.herokuapp.com/api/restaurants?city=${city}&per_page=100`)
       .then(res => res.json())
-      .then((data) => dispatch(ADD_RESULTS(data.restaurants)))
-      // .then((data) => console.log(data.restaurants))
+      .then((data) => {
+        dispatch(ADD_RESULTS(data.restaurants))
+
+        // if (!data.restaurants.length){
+        //   return setHasResults(false)
+        // }
+        
+        // setHasResults(true)
+        // setIsSearching(false)
+      })
   }
 
-  const onSubmit = (e, query) => {
+  useEffect(() => {
+    fetchRestaurants(city)
+  },[city])
+
+  const showResults = () => {
+    return (
+      <ul>
+        { 
+          restaurants.map((res) => <RestaurantItem restaurant={res}/>)
+        }
+      </ul>
+    )
+  }
+
+  const handleCitySubmit = (e, city) => {
     e.preventDefault()
-    fetchRestaurants(query)
+    setCity(city)
   }
 
   return (
     <>
-      <SearchByCity onSubmit={onSubmit} />
+      <SearchByCity onSubmit={handleCitySubmit} />
       <div role="main">
-        There is where results go
+        { restaurants?.length ? showResults() : null}
       </div>
     </>
   )
 }
-
-// return (
-//   <div className="App">
-//     <header className="App-header">
-//       <Counter />
-//       <p>
-//         Edit <code>src/App.js</code> and save to reload.
-//       </p>
-//       <span>
-//         <span>Learn </span>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org/"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           React
-//         </a>
-//         <span>, </span>
-//         <a
-//           className="App-link"
-//           href="https://redux.js.org/"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Redux
-//         </a>
-//         <span>, </span>
-//         <a
-//           className="App-link"
-//           href="https://redux-toolkit.js.org/"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Redux Toolkit
-//         </a>
-//         ,<span> and </span>
-//         <a
-//           className="App-link"
-//           href="https://react-redux.js.org/"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           React Redux
-//         </a>
-//       </span>
-//     </header>
-//   </div>
-// );
-
 export default App;

@@ -7,7 +7,8 @@ const Container = styled('div')(
     border: '1px solid black',
     borderRadius: '5px',
     marginBottom: '32px',
-    padding: '16px'
+    padding: '16px',
+    listStyle: 'none'
   }
 )
 
@@ -17,18 +18,24 @@ const Bold = styled('span')(
   }
 )
 
-const RestaurantItem = ({ name, address, price }) => (
-  <Container as="li">
-    <h3>{name}</h3>
-    <p><Bold>Address: </Bold>{address}</p>
-    <p><Bold>Price: </Bold>{price}</p>
-  </Container>
-)
-
+const RestaurantItem = ({ restaurant }) => {
+  const { name, address, area, price } = restaurant
+  return (
+    <Container as="li">
+      <h3>{name}</h3>
+      <p><Bold>Address: </Bold>{address}</p>
+      <p><Bold>Area: </Bold>{area}</p>
+      <p><Bold>Price: </Bold>{price}</p>
+    </Container>
+  )
+}
 RestaurantItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired
+  restaurant: PropTypes.shape({
+    name: PropTypes.string,
+    address: PropTypes.string,
+    area: PropTypes.string,
+    price: PropTypes.string,
+  })
 }
 
 export default RestaurantItem;
