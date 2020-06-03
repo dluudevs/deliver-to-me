@@ -11,10 +11,10 @@ const SearchByCity = ({ onSubmit }) => {
       <SearchInput
         value={value}
         onChange={e => setValue(e.target.value)}
-        name="city"
-        label="Search"
+        name="restaurant"
+        label="Filter"
       />
-      <Button>Search</Button>
+      <Button>Filter</Button>
     </FormWrapper>
   )
 }

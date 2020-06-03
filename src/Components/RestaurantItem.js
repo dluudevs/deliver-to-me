@@ -7,8 +7,24 @@ const Container = styled('div')(
     border: '1px solid black',
     borderRadius: '5px',
     marginBottom: '32px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: '16px',
-    listStyle: 'none'
+    listStyle: 'none',
+    boxShadow: '10px 10px 5px #0000008a',
+  }
+)
+
+const H3 = styled('h3')(
+  {
+    margin: 0
+  }
+)
+
+const Text = styled('p')(
+  {
+    margin: 0
   }
 )
 
@@ -19,13 +35,13 @@ const Bold = styled('span')(
 )
 
 const RestaurantItem = ({ restaurant }) => {
-  const { name, address, area, price } = restaurant
+  const { name, address, area, price, id } = restaurant
   return (
     <Container as="li">
-      <h3>{name}</h3>
-      <p><Bold>Address: </Bold>{address}</p>
-      <p><Bold>Area: </Bold>{area}</p>
-      <p><Bold>Price: </Bold>{price}</p>
+      <H3>{name}</H3>
+      <Text><Bold>Address: </Bold>{address}</Text>
+      <Text><Bold>Area: </Bold>{area}</Text>
+      <Text><Bold>Price: </Bold>{price}</Text>
     </Container>
   )
 }
@@ -34,7 +50,8 @@ RestaurantItem.propTypes = {
     name: PropTypes.string,
     address: PropTypes.string,
     area: PropTypes.string,
-    price: PropTypes.string,
+    price: PropTypes.number,
+    id: PropTypes.number,
   })
 }
 

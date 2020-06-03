@@ -8,11 +8,14 @@ export const restaurantSlice = createSlice({
   reducers: {
     ADD_RESULTS: (state, action) => {
       state.data = [...state.data, ...action.payload]
+    },
+    CLEAR_RESULTS: (state) => {
+      state.data = []
     }
   }
 });
 
-export const { ADD_RESULTS } = restaurantSlice.actions;
+export const { ADD_RESULTS, CLEAR_RESULTS } = restaurantSlice.actions;
 
 export const selectRestaurant = state => state.restaurants.data
 
