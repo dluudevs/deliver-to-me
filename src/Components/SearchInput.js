@@ -26,7 +26,6 @@ const SearchInput = ({ value, onChange, label, name }) => (
     <input type="text" name={name} value={value} onChange={onChange}/>
   </InputContainer>
 )
-  // set value inside of form
 
 SearchInput.propTypes = {
   value: PropTypes.string.isRequired,

@@ -7,7 +7,7 @@ import Button from './Button'
 const SearchByCity = ({ onSubmit }) => {
   const [ value, setValue ] = useState('')
   return (
-    <FormWrapper onSubmit={(e) => onSubmit(e, value)}>
+    <FormWrapper name="restaurant filter" onSubmit={(e) => onSubmit(e, value)}>
       <SearchInput
         value={value}
         onChange={e => setValue(e.target.value)}

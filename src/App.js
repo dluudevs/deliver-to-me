@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ADD_RESULTS, CLEAR_RESULTS, selectRestaurant } from './slice/restaurantSlice'
 import SearchByCity from './Components/SearchByCity'
 import SearchByName from './Components/SearchByName'
+import SortByPrice from './Components/SortByPrice'
 import RestaurantItem from './Components/RestaurantItem'
 
 const AppContainer = styled('div')(
@@ -17,7 +18,14 @@ const SearchContainer = styled('div')(
   {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: '32px'
+  }
+)
+
+const LoadingMessage = styled('p')(
+  {
+    textAlign: 'center'
   }
 )
 
@@ -27,11 +35,12 @@ function App() {
   
   const [ city, setCity ] = useState('')
   const [ name, setName ] = useState('')
+  const [ priceSort, setPriceSort ] = useState('')
   
-  const [ filteredResults, setFilteredResults ] = useState([])
-
   const [ isSearching, setIsSearching ] = useState(false)
   const [ isCitySearched, setIsCitySearched ] = useState(false) 
+  
+  const [ filteredResults, setFilteredResults ] = useState([])
 
   useEffect(() => {
     const fetchRestaurants = (city) => {
@@ -55,12 +64,19 @@ function App() {
   useEffect(() => {
     const regex = RegExp(name, 'gi',)
     const filtered = restaurants.filter(res => regex.test(res.name))
-    console.log(filtered)
     setFilteredResults(filtered)
   }, [name, restaurants])
 
   const showResults = () => {
-      const data = name ? filteredResults : restaurants
+      // make a shallow copy of restaurants since it is read only and the sort method mutates
+      let data = name ? filteredResults : [...restaurants]
+
+      if (priceSort === 'ascending'){
+        data = data.sort((a, b) => a.price - b.price)
+      } else if (priceSort === 'descending'){
+        data = data.sort((a, b) => b.price - a.price)
+      }
+
       return (
         <ul style={{paddingLeft: 0}}>
           { 
@@ -72,11 +88,11 @@ function App() {
 
   const showLoading = () => {
     if (isSearching){
-      return <p>Searching for restaurants in: {city}</p>
+      return <LoadingMessage>Searching for restaurants in: {city}</LoadingMessage>
     }
 
     if (isCitySearched && !isSearching){
-      return <p>No results found for: {city}</p>
+      return <LoadingMessage>No results found for: {city}</LoadingMessage>
     }
   }
 
@@ -91,15 +107,20 @@ function App() {
     if (!restaurants?.length){
       return null
     }
-    console.log('handle filter submit')
     setName(name)
+  }
+
+  const handlePriceSort = (e) => {
+    setPriceSort(e.target.value)
   }
 
   return (
     <AppContainer>
+      <h1 style={{textAlign: 'center'}}>Deliver to Me!</h1>
       <SearchContainer>
         <SearchByCity onSubmit={handleCitySubmit} />
         <SearchByName onSubmit={handleFilterSubmit}/>
+        <SortByPrice onChange={handlePriceSort}/>
       </SearchContainer>
       <div role="main">
         { restaurants?.length ? showResults() : showLoading()}
