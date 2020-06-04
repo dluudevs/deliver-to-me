@@ -1,16 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import FormWrapper from './FormWrapper'
 import SearchInput from './SearchInput'
 import Button from './Button'
 
-const SearchByCity = ({ onSubmit }) => {
-  const [ value, setValue ] = useState('')
+const SearchByCity = ({ onSubmit, onChange, value }) => {
   return (
-    <FormWrapper name="city search" onSubmit={(e) => onSubmit(e, value)}>
+    <FormWrapper name="city search" onSubmit={(e) => onSubmit(e)}>
       <SearchInput
         value={value}
-        onChange={e => setValue(e.target.value)}
+        onChange={e => onChange(e.target.value)}
         name="city"
         label="Search by City"
       />
@@ -20,7 +19,9 @@ const SearchByCity = ({ onSubmit }) => {
 }
 
 SearchByCity.propTypes = {
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired
 }
 
 export default SearchByCity;

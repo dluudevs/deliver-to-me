@@ -40,16 +40,13 @@ function App() {
   const [ priceSort, setPriceSort ] = useState('')
   
   const [ isSearching, setIsSearching ] = useState(false)
-  const [ isCitySearched, setIsCitySearched ] = useState(false) 
+  const [ isCitySearched, setIsCitySearched ] = useState(false)
+  const [ isFiltering, setIsFiltering ] = useState(false) 
   
   const [ filteredResults, setFilteredResults ] = useState([])
 
   useEffect(() => {
     const fetchRestaurants = (city) => {
-      if (!city){
-        return null
-      }
-    
       fetch(`https://opentable.herokuapp.com/api/restaurants?city=${city}&per_page=100`)
         .then(res => res.json())
         .then((data) => {
@@ -59,19 +56,16 @@ function App() {
         })
     }
     
-    dispatch(CLEAR_RESULTS())
-    fetchRestaurants(city)
-  },[city, dispatch])
+    if (isSearching){
+      dispatch(CLEAR_RESULTS())
+      fetchRestaurants(city)
+    }
 
-  useEffect(() => {
-    const regex = RegExp(name, 'gi',)
-    const filtered = restaurants.filter(res => regex.test(res.name))
-    setFilteredResults(filtered)
-  }, [name, restaurants])
+  },[city, isSearching, dispatch])
 
   const showResults = () => {
       // make a shallow copy of restaurants since it is read only and the sort method mutates
-      let data = name ? filteredResults : [...restaurants]
+      let data = isFiltering ? filteredResults : [...restaurants]
 
       if (priceSort === 'ascending'){
         data = data.sort((a, b) => a.price - b.price)
@@ -98,18 +92,30 @@ function App() {
     }
   }
 
-  const handleCitySubmit = (e, city) => {
+  const handleCitySubmit = (e) => {
     e.preventDefault()
-    setCity(city)
+    setName('')
+    setIsFiltering(false)
     setIsSearching(true)
   }
+  
+  const handleCityChange = (city) => {
+    setIsCitySearched(false)
+    setCity(city)
+  }
 
-  const handleFilterSubmit = (e, name) => {
+  const handleFilterSubmit = (e) => {
     e.preventDefault()
+
     if (!restaurants?.length){
       return null
     }
-    setName(name)
+
+    const regex = RegExp(name, 'gi',)
+    const filtered = restaurants.filter(res => regex.test(res.name))
+
+    setFilteredResults(filtered)
+    setIsFiltering(true)
   }
 
   const handlePriceSort = (e) => {
@@ -120,12 +126,12 @@ function App() {
     <AppContainer>
       <h1 style={{textAlign: 'center'}}>Deliver to Me!</h1>
       <SearchContainer>
-        <SearchByCity onSubmit={handleCitySubmit} />
-        <SearchByName onSubmit={handleFilterSubmit}/>
+        <SearchByCity onSubmit={handleCitySubmit} onChange={handleCityChange} value={city} />
+        <SearchByName onSubmit={handleFilterSubmit} onChange={setName} value={name}/>
         <SortByPrice onChange={handlePriceSort}/>
       </SearchContainer>
       <div role="main">
-        { restaurants?.length ? showResults() : showLoading()}
+        { restaurants?.length ? showResults() : showLoading() }
       </div>
     </AppContainer>
   )

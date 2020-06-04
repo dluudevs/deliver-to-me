@@ -2,7 +2,7 @@
 solution if you had more time? If you didn't spend much time on the coding test
 then use this as an opportunity to explain what you would add.
 
-  - I spent 6.5 hours on this coding assignment. If I had more time, I would make the UI a little nicer and write more tests.
+  - I spent 7.5 hours on this coding assignment. If I had more time, I would make the UI a little nicer and find a cleaner approach to manage form state.
 
 2. What was the most useful feature that was added to the latest version of your
 chosen language? Please include a snippet of code that shows how you've used
