@@ -18,7 +18,7 @@ const Container = styled('div')(
 
 const H3 = styled('h3')(
   {
-    margin: 0
+    margin: 0,
   }
 )
 
@@ -35,7 +35,7 @@ const Bold = styled('span')(
 )
 
 const RestaurantItem = ({ restaurant }) => {
-  const { name, address, area, price, id } = restaurant
+  const { name, address, area, price } = restaurant
   return (
     <Container as="li">
       <H3>{name}</H3>

@@ -10,6 +10,8 @@ import RestaurantItem from './Components/RestaurantItem'
 const AppContainer = styled('div')(
   {
     maxWidth: '1200px',
+    paddingLeft: '12px',
+    paddingRight: '12px',
     margin: '0 auto'
   }
 )

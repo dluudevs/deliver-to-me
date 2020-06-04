@@ -23,7 +23,7 @@ const SearchInput = ({ value, onChange, label, name }) => (
     <StyledLabel htmlFor={name}> 
       {label}
     </StyledLabel>
-    <input type="text" name={name} value={value} onChange={onChange}/>
+    <input type="text" id={name} value={value} onChange={onChange}/>
   </InputContainer>
 )
 

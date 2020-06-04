@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should take a snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-fzoLsD etyLjA"
+  >
+    <h1
+      style="text-align: center;"
+    >
+      Deliver to Me!
+    </h1>
+    <div
+      class="sc-fzpans fMUYTq"
+    >
+      <form
+        class="sc-AxjAm iMUxe"
+      >
+        <div
+          class="sc-AxirZ hoemfw"
+        >
+          <label
+            class="sc-AxiKw dsIrV"
+            for="city"
+          >
+            Search
+          </label>
+          <input
+            id="city"
+            type="text"
+            value=""
+          />
+        </div>
+        <button
+          class="sc-AxhCb gvrTmn"
+          type="submit"
+        >
+          Search
+        </button>
+      </form>
+      <form
+        class="sc-AxjAm iMUxe"
+      >
+        <div
+          class="sc-AxirZ hoemfw"
+        >
+          <label
+            class="sc-AxiKw dsIrV"
+            for="restaurant"
+          >
+            Filter
+          </label>
+          <input
+            id="restaurant"
+            type="text"
+            value=""
+          />
+        </div>
+        <button
+          class="sc-AxhCb gvrTmn"
+          type="submit"
+        >
+          Filter
+        </button>
+      </form>
+      <div
+        class="sc-AxhUy kcZXtt"
+      >
+        <label
+          class="sc-AxgMl dHRSkO"
+        >
+          Sort By Price
+        </label>
+        <select
+          id="price-sort"
+          name="price"
+          style="width: 169px;"
+        >
+          <option
+            value=""
+          >
+            Sort Price
+          </option>
+          <option
+            value="ascending"
+          >
+            Ascending
+          </option>
+          <option
+            value="descending"
+          >
+            Descending
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      role="main"
+    />
+  </div>
+</DocumentFragment>
+`;
