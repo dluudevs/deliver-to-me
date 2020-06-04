@@ -12,7 +12,7 @@ const SearchByCity = ({ onSubmit }) => {
         value={value}
         onChange={e => setValue(e.target.value)}
         name="city"
-        label="Search"
+        label="Search by City"
       />
       <Button>Search</Button>
     </FormWrapper>

@@ -18,7 +18,7 @@ const StyledLabel = styled('label')(
 
 const SortByPrice = ({ onChange }) => (
   <SelectContainer>
-    <StyledLabel>Sort By Price</StyledLabel>
+    <StyledLabel htmlFor="price-sort">Sort By Price</StyledLabel>
     <select name="price" id="price-sort" onChange={onChange} style={{width: '169px'}}>
       <option value="">Sort Price</option>
       <option value="ascending">Ascending</option>
